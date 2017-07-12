@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+}
+table, tr, td {
+  border: 1px #aaaaaa solid;
+  border-spacing: 0px;
+}
+#tocompress-data,
+#compressed-data,
+#uncompressed-data
+{
+  word-break:break-all;
+}

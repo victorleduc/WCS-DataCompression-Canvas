@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RLE Data Compression</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>RLE Data Compression</h1>
+    <table>
+      <tr>
+        <td>Description</td>
+        <td>Taille</td>
+        <td>Valeur</td>
+      </tr>
+      <tr>
+        <td>Données à compresser</td>
+        <td id="tocompress-size"></td>
+        <td id="tocompress-data"></td>
+      </tr>
+      <tr>
+        <td>Données compressées</td>
+        <td id="compressed-size"></td>
+        <td id="compressed-data"></td>
+      </tr>
+      <tr>
+        <td>Facteur de compression</td>
+        <td id="compression-gain"></td>
+        <td id="compression-ratio"></td>
+      </tr>
+      <tr>
+        <td>Données dé-compressées</td>
+        <td id="uncompressed-size"></td>
+        <td id="uncompressed-data"></td>
+      </tr>
+      <tr>
+        <td>Compression/Décompression OK ?</td>
+        <td colspan="2" id="process-status"></td>
+      </tr>
+    </table>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="jquery-1.7.1.min.js"><\/script>')</script>
+    <script src="main.js"></script>
+  </body>
+</html>
