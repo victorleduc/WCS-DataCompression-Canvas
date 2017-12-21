@@ -11,25 +11,50 @@
 */
 
 function compressionRLESimple(donneesACompresser) {
+  let data = donneesACompresser.match(/(.)\1*/g);
+  data = data.map(word => word.length + word[0]);
+  return data.join("");
 }
 
 function decompressionRLESimple(donneesCompressees) {
+  let data = donneesCompressees.match(/\d+[a-z]/ig);
+  data = data.map(word => {
+    let charNumber = word.match(/\d+/g)[0];
+    let char = word[word.length - 1];
+    return char.repeat(charNumber);
+  });
+  return data.join("");
 }
 
 function compressionRLEAvance(donnees, seuil, delimiteur) {
+  let data = donnees.match(/(.)\1*/g);
+  data = data.map(word => word.length > seuil ? delimiteur + word.length + word[0] : word);
+  return data.join("");
 }
 
 function decompressionRLEAvance(donneesCompressees, delimiteur) {
+  let regex = new RegExp("(" + delimiteur + "\\d+[a-z])|([a-z]\1*)", "ig");
+  let data = donneesCompressees.match(regex);
+  data = data.map(word => {
+    if (word[0] == delimiteur) {
+      let charNumber = word.match(/\d+/g)[0];
+      let char = word[word.length - 1];
+      return char.repeat(charNumber);
+    }
+    return word;
+  });
+  return data.join("");
+  console.log(data);
 }
 
 
 function compression(donnees, seuil, delimiteur) {
-//  return compressionRLEAvance(donnees, seuil, delimiteur);
-  return compressionRLESimple(donnees);
+  return compressionRLEAvance(donnees, seuil, delimiteur);
+  // return compressionRLESimple(donnees);
 }
 function decompression(donnees, delimiteur) {
-//  return decompressionRLEAvance(donnees, delimiteur);
-  return decompressionRLESimple(donnees);
+  return decompressionRLEAvance(donnees, delimiteur);
+  //return decompressionRLESimple(donnees);
 }
 
 var toCompressSize = $('td#tocompress-size');
@@ -50,10 +75,10 @@ toCompressData.on("DOMSubtreeModified", function () {
 compressedData.on("DOMSubtreeModified", function () {
   compressedSize.text(compressedData.text().length);
   compressionGain.text(toCompressSize.text() - compressedSize.text());
-  compressionRatio.text(Number(compressionGain.text()/toCompressSize.text()*100).toFixed(1) + " %");
+  compressionRatio.text(Number(compressionGain.text() / toCompressSize.text() * 100).toFixed(1) + " %");
   uncompressedData.text(decompression(compressedData.text(), '@'));
 });
-uncompressedData.on("DOMSubtreeModified", function() {
+uncompressedData.on("DOMSubtreeModified", function () {
   uncompressedSize.text(uncompressedData.text().length);
   if (toCompressData.text() === uncompressedData.text()) {
     processStatus.text("OK");
